@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>Pines Tags</title>
+		<!-- jQuery -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+		<!-- jQuery UI -->
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/smoothness/jquery-ui.css" media="all" rel="stylesheet" type="text/css" />
+		<!-- Theme Switcher Widget -->
+		<link type="text/css" rel="stylesheet" href="http://jqueryui.com/themes/base/ui.all.css" />
+		<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+		<!-- Pines Tags -->
+		<script type="text/javascript" src="jquery.ptags.js"></script>
+		<link href="jquery.ptags.default.css" rel="stylesheet" type="text/css" />
+		<style type="text/css">
+			/* <![CDATA[ */
+			html, body {
+				font-family: 'Palatino Linotype','Book Antiqua',Palatino,serif;
+				font-size: .92em;
+			}
+			.wrapper {
+				background: transparent url(includes/watermark-small.png) no-repeat fixed bottom right;
+				padding: 10px;
+			}
+			#header {
+				height: 68px;
+				position: relative;
+			}
+			#switcher-container {
+				position: absolute;
+				top: 5px;
+				right: 5px;
+			}
+			#header img.header {
+				position: absolute;
+			}
+			#header h1.header {
+				text-align: center;
+			}
+			.main-description {
+				font-size: 1.2em;
+			}
+			h2 {
+				margin: .83em 0 .1em 0;
+			}
+			p {
+				margin: 1em 0 .5em 0;
+			}
+			.featurelist {
+				background: transparent none no-repeat 0 0 !important;
+				margin: .5em 10px .5em 0;
+				padding: .5em;
+				float: left;
+			}
+			.featurelist ul {
+				margin: 0;
+				padding: 0;
+				list-style-type: none;
+			}
+			.featurelist ul a {
+				text-decoration: underline !important;
+			}
+			.featurelist ul .ui-icon {
+				display: inline-block;
+				position: relative;
+				top: 4px;
+				margin-right: .3em;
+			}
+			.featurelist ul img {
+				vertical-align: middle;
+				border: none 0;
+			}
+			.pf-group {
+				background: transparent none no-repeat 0 0 !important;
+				padding: 4px;
+				margin: 5px auto;
+			}
+			.ui-widget {
+				font-size: 75% !important;
+			}
+			/* ]]> */
+		</style>
+		<!--[if lt IE 8]>
+		<style type="text/css">
+			.featurelist ul {
+				padding-left: 1em;
+				list-style-type: disc;
+			}
+			.featurelist ul .ui-icon {
+				display: none;
+			}
+		</style>
+		<![endif]-->
+		<script type="text/javascript">
+			// <![CDATA[
+
+			$(document).ready(function(){
+				// This is how to change the default settings for the entire page.
+				//$.ptags.defaults.ptags_delimiter = ";";
+
+				$("#tags").ptags();
+
+				$(":button.ui-state-default").hover(function(){
+					$(this).addClass('ui-state-hover');
+				}, function(){
+					$(this).removeClass('ui-state-hover');
+				});
+
+				$('#switcher').themeswitcher();
+			});
+
+			// ]]>
+		</script>
+	</head>
+	<body>
+		<div class="ui-widget-content ui-corner-all ui-helper-clearfix">
+			<div class="wrapper">
+				<div id="header" class="ui-widget-header ui-corner-all">
+					<div id="switcher-container"><div id="switcher"></div></div>
+					<img class="header" src="includes/default_logo.png" alt="Pines Logo" />
+					<h1 class="header">Pines Tags jQuery Plugin</h1>
+				</div>
+				<p class="main-description">
+					Pines Tags is a JavaScript content tag editor plugin for the
+					jQuery JavaScript library, developed by Hunter Perrin as part
+					of <a href="http://sourceforge.net/projects/pines/">Pines</a>.
+					It is licensed under the
+					<a href="http://www.gnu.org/licenses/agpl-3.0.html">GNU Affero GPL</a>.
+					It is designed to provide maximum flexibility, while
+					still being easy to use and easy to implement. Try out
+					different themes using the selector in the top right corner
+					of this page.
+				</p>
+				<h2>Features</h2>
+				<div class="ui-helper-clearfix">
+					<div class="featurelist ui-widget-content ui-corner-all">
+						<ul>
+							<li><span class="ui-icon ui-icon-bullet"></span>Preserves original input element. The value is updated when tags change, so you don't have to alter your server side script.</li>
+							<li><span class="ui-icon ui-icon-bullet"></span>Tags can be edited by clicking them.</li>
+							<li><span class="ui-icon ui-icon-bullet"></span><a href="http://validator.w3.org/check?uri=referer">XHTML 1.0 Strict compliance.</a></li>
+							<li><span class="ui-icon ui-icon-bullet"></span><a href="http://jqueryui.com/themeroller/"><img src="includes/themeroller-ready.png" alt="ThemeRoller Ready" /></a></li>
+						</ul>
+					</div>
+				</div>
+				<h2>Demos</h2>
+				<form id="demo_form" action="post">
+					<div class="pf-group ui-widget-content ui-corner-all">
+						<input type="text" id="tags" name="tags" value="i'm a tag,me too" />
+						<br style="margin-bottom: 5px; display: block;" />
+						<input value="Add a Tag" onclick="$('#tags').ptags_add('Random Number: '+Math.random());" type="button" class="ui-state-default ui-corner-all" />
+						<input value="Add Tags" onclick="$('#tags').ptags_add(['test1', 'test2', 'test3']);" type="button" class="ui-state-default ui-corner-all" />
+						<input value="Remove &quot;test1&quot; Tag" onclick="$('#tags').ptags_remove('test1');" type="button" class="ui-state-default ui-corner-all" />
+						<input value="Remove Test Tags" onclick="$('#tags').ptags_remove(['test1', 'test2', 'test3']);" type="button" class="ui-state-default ui-corner-all" />
+					</div>
+					<div class="pf-group ui-widget-content ui-corner-all">
+						<input value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.')" type="button" class="ui-state-default ui-corner-all" />
+						<br style="margin-bottom: 5px; display: block;" />
+						<input type="text" id="user_tags1" name="user_tags1" />
+					</div>
+					<div class="pf-group ui-widget-content ui-corner-all">
+						<input value="Transform this box with custom delimiter." onclick="$('#user_tags2').ptags({ptags_delimiter: ' '});" type="button" class="ui-state-default ui-corner-all" />
+						<br style="margin-bottom: 5px; display: block;" />
+						<input type="text" id="user_tags2" name="user_tags2" value="these are tags separated by spaces" />
+					</div>
+					<div class="pf-group ui-widget-content ui-corner-all">
+						<input value="Only add tag buttons to this box." onclick="$('#user_tags3').ptags({ptags_show_box: true, ptags_input_box: false});" type="button" class="ui-state-default ui-corner-all" />
+						<br style="margin-bottom: 5px; display: block;" />
+						<input type="text" id="user_tags3" name="user_tags3" value="some,default,tags" />
+					</div>
+					<div class="pf-group ui-widget-content ui-corner-all">
+						<input value="What will this form submit?" onclick="alert('Query String:\n' + $('#demo_form input:text').serialize() + '\n\nJSON Structure:\n' + JSON.stringify($('#demo_form input:text').serializeArray()));" type="button" class="ui-state-default ui-corner-all" />
+					</div>
+				</form>
+
+				<h2>Installation</h2>
+				<p>Installation is simple. Include jQuery, jQuery UI (only the CSS is required), and the CSS for a jQuery UI theme, then the following files:</p>
+				<div class="ui-helper-clearfix">
+					<div class="featurelist">
+						<ul>
+							<li><span class="ui-icon ui-icon-bullet"></span><a href="jquery.ptags.js">jquery.ptags.js</a> or <a href="jquery.ptags.min.js">jquery.ptags.min.js</a> (Minified)</li>
+							<li><span class="ui-icon ui-icon-bullet"></span><a href="jquery.ptags.default.css">jquery.ptags.default.css</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
