@@ -11,27 +11,27 @@
 .ui-ptags {
 	display: block;
 }
-
 .ui-ptags-tag-box-container, .ui-ptags-tag-container {
 	float: left;
 }
-
+.ui-ptags-tag-box-container {
+	margin-bottom: .2em;
+}
 .ui-ptags-tag {
 	float: left;
-	margin-left: 5px;
-	padding: 2px 3px;
+	margin: 0 .2em .2em;
+	padding: .2em .3em;
 }
-
 .ui-ptags-tag-text {
 	float: left;
 	cursor: pointer;
+	margin: 0;
+	padding: 0;
 }
-
 .ui-ptags-tag .ui-ptags-tag-remover {
 	float: left;
-	margin: 1px;
+	margin-left: .1em;
 }
-
 .ui-ptags-clear {
 	height: 0px;
 }

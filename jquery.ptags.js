@@ -148,9 +148,9 @@
 					}
 				});
 				if (input_box.attr("id"))
-					input_box.attr("id", input_box.attr("id") + "_ptags_input");
+					input_box.attr("id", input_box.attr("id") + "__ptags");
 				if (input_box.attr("name"))
-					input_box.attr("name", input_box.attr("name") + "_ptags_input");
+					input_box.attr("name", input_box.attr("name") + "__ptags");
 				ptags.ptags_container.append(input_box);
 			}
 

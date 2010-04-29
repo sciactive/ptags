@@ -99,7 +99,7 @@
 				// This is how to change the default settings for the entire page.
 				//$.ptags.defaults.ptags_delimiter = ";";
 
-				$("#tags").ptags();
+				$("#tags1, #tags2").ptags();
 
 				$(":button.ui-state-default").hover(function(){
 					$(this).addClass('ui-state-hover');
@@ -128,7 +128,12 @@
 					It is licensed under the
 					<a href="http://www.gnu.org/licenses/agpl-3.0.html">GNU Affero GPL</a>.
 					It is designed to provide maximum flexibility, while
-					still being easy to use and easy to implement. Try out
+					still being easy to use and easy to implement. The original
+					input element is hidden and a clone input element is created
+					to allow the user to edit and create tags. This new input is
+					exactly the same as the original, except "__ptags" is
+					appended to the name and ID. The original input's value is
+					kept current with all the tags which are entered. Try out
 					different themes using the selector in the top right corner
 					of this page.
 				</p>
@@ -136,8 +141,9 @@
 				<div class="ui-helper-clearfix">
 					<div class="featurelist ui-widget-content ui-corner-all">
 						<ul>
-							<li><span class="ui-icon ui-icon-bullet"></span>Preserves original input element. The value is updated when tags change, so you don't have to alter your server side script.</li>
+							<li><span class="ui-icon ui-icon-bullet"></span>Preserves original input element. The value is updated, so you don't have to alter your scripts.</li>
 							<li><span class="ui-icon ui-icon-bullet"></span>Tags can be edited by clicking them.</li>
+							<li><span class="ui-icon ui-icon-bullet"></span>Supports any custom delimeters.</li>
 							<li><span class="ui-icon ui-icon-bullet"></span><a href="http://validator.w3.org/check?uri=referer">XHTML 1.0 Strict compliance.</a></li>
 							<li><span class="ui-icon ui-icon-bullet"></span><a href="http://jqueryui.com/themeroller/"><img src="includes/themeroller-ready.png" alt="ThemeRoller Ready" /></a></li>
 						</ul>
@@ -146,12 +152,18 @@
 				<h2>Demos</h2>
 				<form id="demo_form" action="post">
 					<div class="pf-group ui-widget-content ui-corner-all">
-						<input type="text" id="tags" name="tags" value="i'm a tag,me too" />
+						<input type="text" id="tags1" name="tags1" value="i'm a tag,me too" />
 						<br style="margin-bottom: 5px; display: block;" />
 						<input value="Add a Tag" onclick="$('#tags').ptags_add('Random Number: '+Math.random());" type="button" class="ui-state-default ui-corner-all" />
 						<input value="Add Tags" onclick="$('#tags').ptags_add(['test1', 'test2', 'test3']);" type="button" class="ui-state-default ui-corner-all" />
 						<input value="Remove &quot;test1&quot; Tag" onclick="$('#tags').ptags_remove('test1');" type="button" class="ui-state-default ui-corner-all" />
 						<input value="Remove Test Tags" onclick="$('#tags').ptags_remove(['test1', 'test2', 'test3']);" type="button" class="ui-state-default ui-corner-all" />
+						<input value="Remove All Tags" onclick="$('#tags').ptags_remove_all();" type="button" class="ui-state-default ui-corner-all" />
+					</div>
+					<div class="pf-group ui-widget-content ui-corner-all">
+						Styles on the input box are maintained:
+						<br style="margin-bottom: 5px; display: block;" />
+						<input class="ui-widget-content ui-corner-all" style="padding: .2em .3em;" type="text" id="tags2" name="tags2" value="these,are,tags" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
 						<input value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.')" type="button" class="ui-state-default ui-corner-all" />
