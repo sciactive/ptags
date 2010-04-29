@@ -28,6 +28,14 @@
 		});
 		return this;
 	};
+	$.fn.ptags_remove_all = function() {
+		this.each(function(){
+			if (!this.pines_tags)
+				return;
+			this.pines_tags.ptags_remove_all();
+		});
+		return this;
+	};
 
 	$.fn.ptags = function(options) {
 		// Build main options before element iteration.
@@ -66,6 +74,12 @@
 					if (i > -1)
 						ptags.ptags_tags.splice(i, 1);
 				});
+				ptags.ptags_update_val();
+				ptags.ptags_update_tags();
+			};
+
+			ptags.ptags_remove_all = function(){
+				ptags.ptags_tags = [];
 				ptags.ptags_update_val();
 				ptags.ptags_update_tags();
 			};
