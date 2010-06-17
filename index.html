@@ -3,10 +3,13 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title>Pines Tags</title>
+		<!-- Dev Notice -->
+		<link href="devnote.css" rel="stylesheet" type="text/css" />
 		<!-- jQuery -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
 		<!-- jQuery UI -->
-		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/smoothness/jquery-ui.css" media="all" rel="stylesheet" type="text/css" />
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css" media="all" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.js"></script> <!-- The whole library to style some buttons! :P -->
 		<!-- Theme Switcher Widget -->
 		<link type="text/css" rel="stylesheet" href="http://jqueryui.com/themes/base/ui.all.css" />
 		<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
@@ -79,6 +82,11 @@
 			.ui-widget {
 				font-size: 75% !important;
 			}
+			.pf-group input.ui-button {
+				padding: 2px !important;
+				font-size: .92em !important;
+				margin-bottom: 3px;
+			}
 			/* ]]> */
 		</style>
 		<!--[if lt IE 8]>
@@ -101,11 +109,7 @@
 
 				$("#tags1, #tags2").ptags();
 
-				$(":button.ui-state-default").hover(function(){
-					$(this).addClass('ui-state-hover');
-				}, function(){
-					$(this).removeClass('ui-state-hover');
-				});
+				$(".wrapper :button").button();
 
 				$('#switcher').themeswitcher();
 			});
@@ -121,6 +125,9 @@
 					<img class="header" src="includes/default_logo.png" alt="Pines Logo" />
 					<h1 class="header">Pines Tags jQuery Plugin</h1>
 				</div>
+				<p style="float: right;">
+					<a href="http://sourceforge.net/projects/pines"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=264165&amp;type=15" width="150" height="40" alt="Get Pines at SourceForge.net. Fast, secure and Free Open Source software downloads" style="border: none;" /></a>
+				</p>
 				<p class="main-description">
 					Pines Tags is a JavaScript content tag editor plugin for the
 					jQuery JavaScript library, developed by Hunter Perrin as part
@@ -136,6 +143,22 @@
 					kept current with all the tags which are entered. Try out
 					different themes using the selector in the top right corner
 					of this page.
+				</p>
+				<p class="dev-note" style="display: none; color: red;">
+					This is the development site. It is a showcase of bleeding
+					edge features and code that may work only partially or not
+					at all. If you are looking for a stable version, please
+					visit the
+					<a href="http://pines.sourceforge.net/pnotify/">main site</a>.
+				</p>
+				<p class="stable-note" style="display: none;">
+					This is the stable site. You can download code here that's
+					tested and proven to work. However, if you like to live
+					dangerously, you can also check out the
+					<a href="http://pines.hg.sourceforge.net/hgweb/pines/pnotify/raw-file/tip/index.html">development site</a>.
+				</p>
+				<p style="text-align: center;">
+					<button type="button" onclick="window.location='https://sourceforge.net/projects/pines/files/ptags/1.0.0/ptags-1.0.0.zip/download';"><strong style="font-size: large;">Download Pines Tags</strong></button>
 				</p>
 				<h2>Features</h2>
 				<div class="ui-helper-clearfix">
@@ -154,11 +177,11 @@
 					<div class="pf-group ui-widget-content ui-corner-all">
 						<input type="text" id="tags1" name="tags1" value="i'm a tag,me too" />
 						<br style="margin-bottom: 5px; display: block;" />
-						<input value="Add a Tag" onclick="$('#tags').ptags_add('Random Number: '+Math.random());" type="button" class="ui-state-default ui-corner-all" />
-						<input value="Add Tags" onclick="$('#tags').ptags_add(['test1', 'test2', 'test3']);" type="button" class="ui-state-default ui-corner-all" />
-						<input value="Remove &quot;test1&quot; Tag" onclick="$('#tags').ptags_remove('test1');" type="button" class="ui-state-default ui-corner-all" />
-						<input value="Remove Test Tags" onclick="$('#tags').ptags_remove(['test1', 'test2', 'test3']);" type="button" class="ui-state-default ui-corner-all" />
-						<input value="Remove All Tags" onclick="$('#tags').ptags_remove_all();" type="button" class="ui-state-default ui-corner-all" />
+						<input value="Add a Tag" onclick="$('#tags1').ptags_add('Random Number: '+Math.random());" type="button" />
+						<input value="Add Test Tags" onclick="$('#tags1').ptags_add(['test1', 'test2', 'test3']);" type="button" />
+						<input value="Remove &quot;test1&quot; Tag" onclick="$('#tags1').ptags_remove('test1');" type="button" />
+						<input value="Remove Test Tags" onclick="$('#tags1').ptags_remove(['test1', 'test2', 'test3']);" type="button" />
+						<input value="Remove All Tags" onclick="$('#tags1').ptags_remove_all();" type="button" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
 						Styles on the input box are maintained:
@@ -166,35 +189,38 @@
 						<input class="ui-widget-content ui-corner-all" style="padding: .2em .3em;" type="text" id="tags2" name="tags2" value="these,are,tags" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
-						<input value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.')" type="button" class="ui-state-default ui-corner-all" />
+						<input value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.')" type="button" />
 						<br style="margin-bottom: 5px; display: block;" />
 						<input type="text" id="user_tags1" name="user_tags1" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
-						<input value="Transform this box with custom delimiter." onclick="$('#user_tags2').ptags({ptags_delimiter: ' '});" type="button" class="ui-state-default ui-corner-all" />
+						<input value="Transform this box with custom delimiter." onclick="$('#user_tags2').ptags({ptags_delimiter: ' '});" type="button" />
 						<br style="margin-bottom: 5px; display: block;" />
 						<input type="text" id="user_tags2" name="user_tags2" value="these are tags separated by spaces" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
-						<input value="Only add tag buttons to this box." onclick="$('#user_tags3').ptags({ptags_show_box: true, ptags_input_box: false});" type="button" class="ui-state-default ui-corner-all" />
+						<input value="Only add tag buttons to this box." onclick="$('#user_tags3').ptags({ptags_show_box: true, ptags_input_box: false});" type="button" />
 						<br style="margin-bottom: 5px; display: block;" />
 						<input type="text" id="user_tags3" name="user_tags3" value="some,default,tags" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
-						<input value="What will this form submit?" onclick="alert('Query String:\n' + $('#demo_form input:text').serialize() + '\n\nJSON Structure:\n' + JSON.stringify($('#demo_form input:text').serializeArray()));" type="button" class="ui-state-default ui-corner-all" />
+						<input value="What will this form submit?" onclick="alert('Query String:\n' + $('#demo_form input:text').serialize() + '\n\nJSON Structure:\n' + JSON.stringify($('#demo_form input:text').serializeArray()));" type="button" />
 					</div>
 				</form>
 
 				<h2>Installation</h2>
-				<p>Installation is simple. Include jQuery, jQuery UI (only the CSS is required), and the CSS for a jQuery UI theme, then the following files:</p>
+				<p>Installation is simple. Include jQuery and jQuery UI (only the CSS is required). Then include the following files:</p>
 				<div class="ui-helper-clearfix">
 					<div class="featurelist">
 						<ul>
-							<li><span class="ui-icon ui-icon-bullet"></span><a href="jquery.ptags.js">jquery.ptags.js</a> or <a href="jquery.ptags.min.js">jquery.ptags.min.js</a> (Minified)</li>
-							<li><span class="ui-icon ui-icon-bullet"></span><a href="jquery.ptags.default.css">jquery.ptags.default.css</a></li>
+							<li><span class="ui-icon ui-icon-bullet"></span>jquery.ptags.js or jquery.ptags.min.js (Minified)</li>
+							<li><span class="ui-icon ui-icon-bullet"></span>jquery.ptags.default.css</li>
 						</ul>
 					</div>
 				</div>
+				<p style="text-align: center;">
+					<button type="button" onclick="window.location='https://sourceforge.net/projects/pines/files/ptags/1.0.0/ptags-1.0.0.zip/download';"><strong style="font-size: large;">Download Pines Tags</strong></button>
+				</p>
 			</div>
 		</div>
 	</body>
