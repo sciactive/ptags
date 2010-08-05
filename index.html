@@ -107,9 +107,9 @@
 				// This is how to change the default settings for the entire page.
 				//$.ptags.defaults.ptags_delimiter = ";";
 
-				$("#tags1, #tags2").ptags();
+				$("#tags1, #tags2, #tags3").ptags();
 
-				$(".wrapper :button").button();
+				$(".wrapper .pf-group > :button").button();
 
 				$('#switcher').themeswitcher();
 			});
@@ -165,8 +165,14 @@
 					<div class="featurelist ui-widget-content ui-corner-all">
 						<ul>
 							<li><span class="ui-icon ui-icon-bullet"></span>Preserves original input element. The value is updated, so you don't have to alter your scripts.</li>
+							<li><span class="ui-icon ui-icon-bullet"></span>Stays in sync with input element. You can still use <code>val()</code>.</li>
 							<li><span class="ui-icon ui-icon-bullet"></span>Tags can be edited by clicking them.</li>
 							<li><span class="ui-icon ui-icon-bullet"></span>Supports any custom delimeters.</li>
+							<li><span class="ui-icon ui-icon-bullet"></span>Completely keyboard accessible.</li>
+						</ul>
+					</div>
+					<div class="featurelist ui-widget-content ui-corner-all">
+						<ul>
 							<li><span class="ui-icon ui-icon-bullet"></span><a href="http://validator.w3.org/check?uri=referer">XHTML 1.0 Strict compliance.</a></li>
 							<li><span class="ui-icon ui-icon-bullet"></span><a href="http://jqueryui.com/themeroller/"><img src="includes/themeroller-ready.png" alt="ThemeRoller Ready" /></a></li>
 						</ul>
@@ -182,11 +188,15 @@
 						<input value="Remove &quot;test1&quot; Tag" onclick="$('#tags1').ptags_remove('test1');" type="button" />
 						<input value="Remove Test Tags" onclick="$('#tags1').ptags_remove(['test1', 'test2', 'test3']);" type="button" />
 						<input value="Remove All Tags" onclick="$('#tags1').ptags_remove_all();" type="button" />
+						<input value="Edit Value Directly" onclick="var newval = prompt('Edit the value:', $('#tags1').val()); if (newval != null) $('#tags1').val(newval);" type="button" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
 						Styles on the input box are maintained:
 						<br style="margin-bottom: 5px; display: block;" />
 						<input class="ui-widget-content ui-corner-all" style="padding: .2em .3em;" type="text" id="tags2" name="tags2" value="these,are,tags" />
+					</div>
+					<div class="pf-group ui-widget-content ui-corner-all">
+						You can place it in line with text. Clifford, the <input type="text" id="tags3" name="tags3" value="big,red" size="5" /> dog.
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
 						<input value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.')" type="button" />

@@ -2,37 +2,36 @@
 	Document   : jquery.ptags.default.css
 	Created on : Nov 23, 2009, 10:34:22 AM
 	Author     : Hunter Perrin
-	Version    : 1.0.0
+	Version    : 1.1.0
 	Description:
 		Default styling for Pines Tags jQuery plugin.
 */
 
 /* Tags
 ----------------------------------*/
-.ui-ptags {
-	display: block;
-}
-.ui-ptags-tag-box-container, .ui-ptags-tag-container {
-	float: left;
-}
-.ui-ptags-tag-box-container {
-	margin-bottom: .2em;
+.ui-ptags-tag-container {
+	margin-left: .2em;
 }
 .ui-ptags-tag {
-	float: left;
-	margin: 0 .2em .2em;
-	padding: .2em .3em;
+	position: relative;
+	display: inline-block;
+	overflow: visible;
+	margin: 0 .1em .2em;
+	padding: .1em .2em;
+	text-align: center;
 }
 .ui-ptags-tag-text {
-	float: left;
 	cursor: pointer;
-	margin: 0;
-	padding: 0;
+	display: block;
+}
+.ui-ptags-tag-text.ui-ptags-tag-text-icon {
+	margin-right: 16px;
 }
 .ui-ptags-tag .ui-ptags-tag-remover {
-	float: left;
-	margin-left: .1em;
-}
-.ui-ptags-clear {
-	height: 0px;
+	height: 16px;
+	width: 16px;
+	margin-top: -8px;
+	position: absolute;
+	top: 50%;
+	right: .1em;
 }

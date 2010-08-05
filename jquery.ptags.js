@@ -1,5 +1,5 @@
 /*
- * jQuery Pines Tags (ptags) Plugin 1.0.0
+ * jQuery Pines Tags (ptags) Plugin 1.1.0
  *
  * Copyright (c) 2009-2010 Hunter Perrin
  *
@@ -8,7 +8,7 @@
  */
 
 (function($) {
-	$.fn.ptags_add = function(textorarray) {
+	$.fn.ptags_add = function(textorarray){
 		if (!textorarray)
 			return this;
 		this.each(function(){
@@ -18,7 +18,7 @@
 		});
 		return this;
 	};
-	$.fn.ptags_remove = function(textorarray) {
+	$.fn.ptags_remove = function(textorarray){
 		if (!textorarray)
 			return this;
 		this.each(function(){
@@ -28,13 +28,25 @@
 		});
 		return this;
 	};
-	$.fn.ptags_remove_all = function() {
+	$.fn.ptags_remove_all = function(){
 		this.each(function(){
 			if (!this.pines_tags)
 				return;
 			this.pines_tags.ptags_remove_all();
 		});
 		return this;
+	};
+	// Wrap the val() function to check for changes to the original input.
+	var _val = $.fn.val;
+	$.fn.val = function(){
+		var ret_val = _val.apply(this, arguments);
+		if (typeof value != "undefined") {
+			this.each(function(){
+				if (typeof this.pines_tags != "undefined")
+					this.pines_tags.ptags_sync_input();
+			});
+		}
+		return ret_val;
 	};
 
 	$.fn.ptags = function(options) {
@@ -45,7 +57,7 @@
 		var all_elements = this;
 		all_elements.each(function() {
 			var ptags = $(this);
-			ptags.ptags_version = "1.0.0";
+			ptags.ptags_version = "1.1.0";
 			
 			// Check for the ptags class. If it has it, we've already transformed this element.
 			if (ptags.hasClass("ui-ptags-tag-box")) return true;
@@ -54,8 +66,8 @@
 			
 			ptags.extend(ptags, opts);
 
-			ptags.ptags_widget = $("<div />");
-			ptags.ptags_container = $("<div />");
+			ptags.ptags_widget = $("<span />");
+			ptags.ptags_container = $("<span />");
 
 			// All arrays and objects in our options need to be copied,
 			// since they just have a pointer to the defaults if we don't.
@@ -94,19 +106,35 @@
 			};
 
 			ptags.ptags_update_val = function(){
-				ptags.val(ptags.ptags_tags.join(ptags.ptags_delimiter));
+				var oldval = ptags.val();
+				var newval = ptags.ptags_tags.join(ptags.ptags_delimiter);
+				if (oldval != newval)
+					ptags.val(newval).change();
+			};
+
+			ptags.ptags_sync_input = function(){
+				var oldval = ptags.ptags_tags.join(ptags.ptags_delimiter);
+				var newval = ptags.val();
+				if (newval == oldval)
+					return;
+
+				ptags.ptags_tags = newval.split(ptags.ptags_delimiter);
+				ptags.ptags_unique_check();
+				ptags.ptags_update_val();
+				ptags.ptags_update_tags();
 			};
 
 			ptags.ptags_update_tags = function(){
 				if (!ptags.ptags_show_tags) return;
 				ptags.ptags_tag_container.empty();
 				$.each(ptags.ptags_tags, function(i, val){
-					var tag_box = $("<div />").addClass("ui-state-default ui-corner-all ui-ptags-tag");
-					tag_box.append($("<div />").addClass("ui-ptags-tag-text").html(val).click(function(){
+					var tag_box = $("<span />").addClass("ui-state-default ui-corner-all ui-ptags-tag");
+					tag_box.append($("<a href=\"#\" />").addClass("ui-ptags-tag-text").html(val).click(function(){
 						if (ptags.ptags_editable && ptags.ptags_input_box) {
 							input_box.val(tag_box.text()).focus().select();
 							ptags.ptags_remove(tag_box.text());
 						}
+						return false;
 					}));
 					if (ptags.ptags_editable && ptags.ptags_input_box) {
 						tag_box.hover(function(){
@@ -116,15 +144,17 @@
 						});
 					}
 					if (ptags.ptags_remover) {
-						tag_box.append($("<span />").addClass("ui-ptags-tag-remover ui-icon ui-icon-circle-minus").click(function(){
+						tag_box.children().addClass("ui-ptags-tag-text-icon").end()
+						.append($("<a href=\"#\" />").addClass("ui-ptags-tag-remover ui-icon ui-icon-circle-minus").click(function(){
 							ptags.ptags_remove(tag_box.text());
+							return false;
 						}));
 					}
 					ptags.ptags_tag_container.append(tag_box);
 				});
 			};
 
-			ptags.ptags_widget.addClass("ui-ptags ui-helper-clearfix");
+			ptags.ptags_widget.addClass("ui-ptags");
 			ptags.wrapAll(ptags.ptags_widget);
 			// Update the widget.
 			ptags.ptags_widget = ptags.parent();
@@ -161,25 +191,16 @@
 				ptags.ptags_update_val();
 			}
 
-			if (ptags.ptags_show_box) {
-				ptags.blur(function(){
-					var tmp_tags_arr = ptags.val().split(ptags.ptags_delimiter);
-					$.merge(ptags.ptags_tags, tmp_tags_arr);
-					ptags.ptags_unique_check();
-					ptags.ptags_update_val();
-					ptags.ptags_update_tags();
-				});
-			} else {
-				ptags.css("display", "none");
-			}
-
 			if (ptags.ptags_show_tags) {
-				ptags.ptags_tag_container = $("<div />").addClass("ui-ptags-tag-container");
+				ptags.ptags_tag_container = $("<span />").addClass("ui-ptags-tag-container");
 				ptags.ptags_widget.append(ptags.ptags_tag_container);
 				ptags.ptags_update_tags();
 			}
 
-			ptags.ptags_widget.append($("<br />").addClass("ui-helper-clearfix ui-ptags-clear"));
+			ptags.change(ptags.ptags_sync_input);
+
+			if (!ptags.ptags_show_box)
+				ptags.css("display", "none");
 
 			// Save the ptags object in the DOM, so we can access it.
 			this.pines_tags = ptags;
