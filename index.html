@@ -108,6 +108,7 @@
 				//$.ptags.defaults.ptags_delimiter = ";";
 
 				$("#tags1, #tags2, #tags3").ptags();
+				$("#tags4").ptags({ptags_sortable: {tolerance: "pointer", handle: ".ui-ptags-tag-text"}});
 
 				$(".wrapper .buttonize").button();
 
@@ -197,6 +198,11 @@
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
 						You can place it in line with text. Clifford, the <input type="text" id="tags3" name="tags3" value="big,red" size="5" /> dog.
+					</div>
+					<div class="pf-group ui-widget-content ui-corner-all">
+						Tags can be sorted using jQuery UI Sortable:
+						<br style="margin-bottom: 5px; display: block;" />
+						<input type="text" id="tags4" name="tags4" value="you,can,sort,us" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
 						<input class="buttonize" value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.')" type="button" />

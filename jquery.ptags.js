@@ -131,6 +131,11 @@
 					var tag_box = $("<span />").addClass("ui-state-default ui-corner-all ui-ptags-tag");
 					tag_box.append($("<a href=\"#\" />").addClass("ui-ptags-tag-text").html(val).click(function(){
 						if (ptags.ptags_editable && ptags.ptags_input_box) {
+							if (ptags.ptags_noclick) {
+								ptags.ptags_noclick = false;
+								tag_box.removeClass("ui-state-hover");
+								return false;
+							}
 							input_box.val(tag_box.text()).focus().select();
 							ptags.ptags_remove(tag_box.text());
 						}
@@ -199,6 +204,20 @@
 
 			ptags.change(ptags.ptags_sync_input);
 
+			if (ptags.ptags_sortable != false) {
+				ptags.ptags_tag_container
+				.sortable(ptags.ptags_sortable)
+				.bind("sortupdate", function(){
+					ptags.ptags_tags = $.map(ptags.ptags_tag_container.find("a.ui-ptags-tag-text"), function(elem){
+						return $(elem).text();
+					});
+					ptags.ptags_update_val();
+				})
+				.bind("sortstop", function(){
+					ptags.ptags_noclick = true;
+				});
+			}
+
 			if (!ptags.ptags_show_box)
 				ptags.css("display", "none");
 
@@ -225,6 +244,8 @@
 		// Provide a remover button on each tag.
 		ptags_remover: true,
 		// Let the user click tags to edit them. (Requires the input box.)
-		ptags_editable: true
+		ptags_editable: true,
+		// Let the user sort tags. Requires jQuery UI Sortable. Should be null for default, or an object which is passed to .sortable().
+		ptags_sortable: false
 	};
 })(jQuery);
