@@ -38,7 +38,7 @@
 	};
 	// Wrap the val() function to check for changes to the original input.
 	var _val = $.fn.val;
-	$.fn.val = function(){
+	$.fn.val = function(value){
 		var ret_val = _val.apply(this, arguments);
 		if (typeof value != "undefined") {
 			this.each(function(){
