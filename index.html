@@ -13,6 +13,13 @@
 		<!-- Theme Switcher Widget -->
 		<link type="text/css" rel="stylesheet" href="http://jqueryui.com/themes/base/ui.all.css" />
 		<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+		<!-- JavaScript Source Formatting -->
+		<script type="text/javascript" src="includes/beautify.js"></script>
+		<!--[if !IE]>-->
+		<script type="text/javascript" src="includes/shCore.js"></script>
+		<script type="text/javascript" src="includes/shBrushJScript.js"></script>
+		<link href="includes/shCoreDefault.css" rel="stylesheet" type="text/css" />
+		<!--<![endif]-->
 		<!-- Pines Tags -->
 		<script type="text/javascript" src="jquery.ptags.js"></script>
 		<link href="jquery.ptags.default.css" rel="stylesheet" type="text/css" />
@@ -87,6 +94,36 @@
 				font-size: .92em !important;
 				margin-bottom: 3px;
 			}
+
+			/* Source View */
+			.source-dialog pre {
+				border: 1px solid black;
+				margin: .5em .5em 1em;
+				padding: 1em;
+				background: beige;
+				color: midnightblue;
+				display:-moz-inline-stack;
+				display:inline-block;
+				zoom:1;
+				*display:inline;
+			}
+			.source-dialog > div {
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+				margin-bottom: 1em;
+				display:-moz-inline-stack;
+				display:inline-block;
+				zoom:1;
+				*display:inline;
+			}
+			.source-dialog > div div.syntaxhighlighter {
+				overflow: visible !important;
+				width: auto !important;
+				display:-moz-inline-stack;
+				display:inline-block;
+				zoom:1;
+				*display:inline;
+			}
 			/* ]]> */
 		</style>
 		<!--[if lt IE 8]>
@@ -108,9 +145,48 @@
 				//$.ptags.defaults.ptags_delimiter = ";";
 
 				$("#tags1, #tags2, #tags3").ptags();
-				$("#tags4").ptags({ptags_sortable: {tolerance: "pointer", handle: ".ui-ptags-tag-text"}});
 
-				$(".wrapper .buttonize").button();
+				// This creates all those source buttons.
+				$(".wrapper .buttonize").each(function(){
+					var button = $(this);
+					if (!button.closest(".pf-group").length) {
+						button.button();
+						return;
+					}
+					// Wrap the button in a container.
+					var contain = $("<span />");
+					contain = button.wrap(contain).parent();
+					// Add a source button.
+					$("<input type=\"button\" value=\"{}\" title=\"Show source code.\" />").click(function(){
+						var text = button.attr("onclick");
+						if (!text && button.attr("onmouseover"))
+							text = "// Mouse Over:\n"+button.attr("onmouseover")+"\n\n// Mouse Move:\n"+button.attr("onmousemove")+"\n\n// Mouse Out:\n"+button.attr("onmouseout");
+						// IE needs this.
+						if (text.toString) {
+							text = text.toString();
+							if (text.match(/^function (onclick|anonymous)\(\)\n\{\n/))
+								text = text.replace(/^function (onclick|anonymous)\(\)\n\{\n/, "").replace(/\n}$/, "");
+						}
+						var dialog = $("<div title=\""+button.val()+" - Source\" class=\"source-dialog\"></div>");
+						$("<pre class=\"brush: js; toolbar: false;\" />").text(js_beautify(text)).appendTo(dialog);
+						if (text.match(/^\w*\([^\)]*\);$/)) {
+							var f_name = text.replace(/\(.*/g, "");
+							text = window[f_name].toString();
+							$("<pre class=\"brush: js; toolbar: false;\" />").text(js_beautify(text)).appendTo(dialog);
+						}
+						dialog.dialog({width: "auto"});
+						// Make sure the dialog isn't more than 800x600.
+						// Can't just add max-height cause that means it can't be resized beyond.
+						if (dialog.width() > 800)
+							dialog.dialog("option", "width", 800).dialog("option", "position", "center");
+						if (dialog.height() > 600)
+							dialog.dialog("option", "height", 600).dialog("option", "position", "center");
+						// Can't call .all(), it doesn't  work.
+						if (typeof SyntaxHighlighter != "undefined")
+							SyntaxHighlighter.highlight();
+					}).appendTo(contain);
+					contain.buttonset();
+				});
 
 				$('#switcher').themeswitcher();
 			});
@@ -199,24 +275,24 @@
 						You can place it in line with text. Clifford, the <input type="text" id="tags3" name="tags3" value="big,red" size="5" /> dog.
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
-						Tags can be sorted using jQuery UI Sortable:
-						<br style="margin-bottom: 5px; display: block;" />
-						<input type="text" id="tags4" name="tags4" value="you,can,sort,us" />
-					</div>
-					<div class="pf-group ui-widget-content ui-corner-all">
-						<input class="buttonize" value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.')" type="button" />
+						<input class="buttonize" value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.');" type="button" />
 						<br style="margin-bottom: 5px; display: block;" />
 						<input type="text" id="user_tags1" name="user_tags1" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
-						<input class="buttonize" value="Transform this box with custom delimiter." onclick="$('#user_tags2').ptags({ptags_delimiter: ' '});" type="button" />
+						<input class="buttonize" value="Transform this box and make tags sortable." onclick="$('#user_tags2').ptags({ptags_sortable: {tolerance: 'pointer', handle: '.ui-ptags-tag-text'}});" type="button" />
 						<br style="margin-bottom: 5px; display: block;" />
-						<input type="text" id="user_tags2" name="user_tags2" value="these are tags separated by spaces" />
+						<input type="text" id="user_tags2" name="user_tags2" value="you,can,sort,us" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
-						<input class="buttonize" value="Only add tag buttons to this box." onclick="$('#user_tags3').ptags({ptags_show_box: true, ptags_input_box: false});" type="button" />
+						<input class="buttonize" value="Transform this box with custom delimiter." onclick="$('#user_tags3').ptags({ptags_delimiter: ' '});" type="button" />
 						<br style="margin-bottom: 5px; display: block;" />
-						<input type="text" id="user_tags3" name="user_tags3" value="some,default,tags" />
+						<input type="text" id="user_tags3" name="user_tags3" value="these are tags separated by spaces" />
+					</div>
+					<div class="pf-group ui-widget-content ui-corner-all">
+						<input class="buttonize" value="Only add tag buttons to this box." onclick="$('#user_tags4').ptags({ptags_show_box: true, ptags_input_box: false});" type="button" />
+						<br style="margin-bottom: 5px; display: block;" />
+						<input type="text" id="user_tags4" name="user_tags4" value="some,default,tags" />
 					</div>
 					<div class="pf-group ui-widget-content ui-corner-all">
 						<input class="buttonize" value="What will this form submit?" onclick="alert('Query String:\n' + $('#demo_form input:text').serialize() + '\n\nJSON Structure:\n' + JSON.stringify($('#demo_form input:text').serializeArray()));" type="button" />
