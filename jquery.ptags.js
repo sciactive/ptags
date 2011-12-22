@@ -1,7 +1,8 @@
 /*
  * jQuery Pines Tags (ptags) Plugin 1.1.1
  *
- * Copyright (c) 2009-2011 Hunter Perrin
+ * http://pinesframework.org/ptags/
+ * Copyright (c) 2009-2012 Hunter Perrin
  *
  * Triple license under the GPL, LGPL, and MPL:
  *	  http://www.gnu.org/licenses/gpl.html
