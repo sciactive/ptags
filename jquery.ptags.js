@@ -1,5 +1,5 @@
 /*
- * jQuery Pines Tags (ptags) Plugin 1.1.1
+ * jQuery Pines Tags (ptags) Plugin 1.1.2dev
  *
  * http://pinesframework.org/ptags/
  * Copyright (c) 2009-2012 Hunter Perrin
@@ -60,7 +60,7 @@
 		var all_elements = this;
 		all_elements.each(function() {
 			var ptags = $(this);
-			ptags.ptags_version = "1.1.1";
+			ptags.ptags_version = "1.1.2dev";
 			
 			// Check for the ptags class. If it has it, we've already transformed this element.
 			if (ptags.hasClass("ui-ptags-tag-box")) return true;
@@ -101,7 +101,9 @@
 
 			ptags.ptags_unique_check = function(){
 				for (var i = 0; i < ptags.ptags_tags.length; i++) {
-					if ($.inArray(ptags.ptags_tags[i], ptags.ptags_tags) < i || ptags.ptags_tags[i] == "") {
+					if (ptags.ptags_trim_tags)
+						ptags.ptags_tags[i] = $.trim(ptags.ptags_tags[i]);
+					if ($.inArray(ptags.ptags_tags[i], ptags.ptags_tags) < i || ptags.ptags_tags[i].length == 0) {
 						ptags.ptags_tags.splice(i, 1);
 						i--;
 					}
@@ -238,6 +240,8 @@
 		ptags_current_text: true,
 		// The delimiter between tags.
 		ptags_delimiter: ",",
+		// Trim whitespace from tags.
+		ptags_trim_tags: true,
 		// Show tags after the box for easier editing.
 		ptags_show_tags: true,
 		// Show the tag box. (Not necessary if you show tags.)
