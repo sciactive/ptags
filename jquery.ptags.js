@@ -1,5 +1,5 @@
 /*
- * jQuery Pines Tags (ptags) Plugin 1.1.2dev
+ * jQuery Pines Tags (ptags) Plugin 1.1.2
  *
  * http://pinesframework.org/ptags/
  * Copyright (c) 2009-2012 Hunter Perrin
@@ -60,7 +60,7 @@
 		var all_elements = this;
 		all_elements.each(function() {
 			var ptags = $(this);
-			ptags.ptags_version = "1.1.2dev";
+			ptags.ptags_version = "1.1.2";
 			
 			// Check for the ptags class. If it has it, we've already transformed this element.
 			if (ptags.hasClass("ui-ptags-tag-box")) return true;

@@ -1,319 +1,574 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<title>Pines Tags</title>
-		<!-- Dev Notice -->
-		<link href="devnote.css" rel="stylesheet" type="text/css" />
-		<!-- jQuery -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
-		<!-- jQuery UI -->
-		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" media="all" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
-		<!-- Theme Switcher Widget -->
-		<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
-		<!-- JavaScript Source Formatting -->
-		<script type="text/javascript" src="includes/beautify.js"></script>
-		<!--[if !IE]>-->
-		<script type="text/javascript" src="includes/shCore.js"></script>
-		<script type="text/javascript" src="includes/shBrushJScript.js"></script>
-		<link href="includes/shCoreDefault.css" rel="stylesheet" type="text/css" />
-		<!--<![endif]-->
-		<!-- Pines Tags -->
-		<script type="text/javascript" src="jquery.ptags.js"></script>
-		<link href="jquery.ptags.default.css" rel="stylesheet" type="text/css" />
-		<style type="text/css">
-			/* <![CDATA[ */
-			html, body {
-				font-family: Arial,sans-serif;
-				font-size: 12px;
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+	<meta charset="utf-8"/>
+	<title>Pines Tags</title>
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="JavaScript (jQuery) content tag editor plugin." />
+	<meta property="og:title" content="Pines Tags" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://pinesframework.org/ptags/" />
+	<meta property="og:image" content="http://pinesframework.org/ptags/includes/pines-logo.png" />
+	<meta property="og:site_name" content="Pines Tags" />
+	<meta property="fb:admins" content="508999194" />
+	<meta property="og:description" content="JavaScript (jQuery) content tag editor plugin." />
+	<!-- Dev Notice -->
+	<link href="devnote.css" rel="stylesheet" type="text/css" />
+	<!-- jQuery -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+	<!-- jQuery UI -->
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css" media="all" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+	<!-- Theme Switcher Widget -->
+	<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+	<!-- Bootstrap -->
+	<link href="includes/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="includes/bootstrap/js/bootstrap.min.js"></script>
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<!-- JavaScript Source Formatting -->
+	<link href="includes/google-code-prettify/prettify.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="includes/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript" src="includes/beautify.js"></script>
+	<!-- Pines Tags -->
+	<script type="text/javascript" src="jquery.ptags.js"></script>
+	<link href="jquery.ptags.default.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		/* Not ptags specific, just make this page a little more presentable. */
+		body {
+			padding: 40px 1em 1em;
+		}
+		#wrapper {
+			max-width: 1140px;
+			margin: 0 auto;
+		}
+		.page-banner {
+			padding: 130px 0 170px;
+			text-align: center;
+		}
+		.page-banner h1 {
+			font-size: 65px;
+			line-height: 65px;
+		}
+		.page-banner p {
+			font-size: 30px;
+			line-height: 36px;
+		}
+		.page-banner .btn-large {
+			margin-top: 20px;
+			font-size: 26px;
+		}
+		.page-banner .right-button {
+			margin-left: 20px;
+		}
+		.quick-links {
+			list-style: none outside none;
+			margin: 0;
+			min-height: 30px;
+			padding: 5px 20px;
+			text-align: center;
+		}
+		.quick-links:first-child {
+			min-height: 0;
+		}
+		.quick-links li {
+			position: relative;
+			top: 5px;
+			color: #999999;
+			display: inline;
+			margin: 0 5px;
+		}
+		.quick-links .fb-btn {
+			top: 1px;
+		}
+		.quick-links .fb_iframe_widget iframe {
+			left: 0;
+		}
+		.page-points .row-fluid {
+			margin-bottom: 30px;
+		}
+		body .pf-form .pf-heading * {
+			margin-top: .1em !important;
+			margin-bottom: .1em !important;
+		}
+		#copyright {
+			text-align: center;
+			margin-top: 40px;
+		}
+		/* Mobile */
+		@media (max-width: 768px) {
+			body {
+				padding: 0;
 			}
-			.wrapper {
-				background: transparent url(includes/watermark-small.png) no-repeat fixed bottom right;
-				padding: 10px;
+			.page-banner {
+				padding: 20px 0;
 			}
-			#header {
-				height: 68px;
-				position: relative;
+			.page-banner h1 {
+				font-size: 35px;
+				line-height: 35px;
 			}
+			.page-banner p {
+				font-size: 16px;
+				line-height: 30px;
+			}
+			.page-banner .btn-large {
+				font-size: 16px;
+			}
+			.page-banner .right-button {
+				margin-left: 0;
+			}
+			.page-points .row-fluid {
+				margin-bottom: 0;
+			}
+			#sections {
+				padding: 0 .4em;
+			}
+			#sections .container-fluid {
+				padding-left: 0;
+				padding-right: 0;
+			}
+		}
+		/* Tablet */
+		@media (min-width: 768px) and (max-width: 980px) {
+			body {
+				padding: 0 1em 1em;
+			}
+			.navbar-fixed-top {
+				margin: 0 -1em 18px;
+			}
+			.page-banner {
+				float: left;
+				width: 20%;
+				padding: 5px 0;
+			}
+			.page-banner h1 {
+				font-size: 25px;
+				line-height: 25px;
+			}
+			.page-banner p {
+				font-size: 14px;
+				line-height: 16px;
+				margin-top: 10px;
+			}
+			.page-banner .btn-large {
+				margin-top: 30px;
+				font-size: 14px;
+			}
+			.page-banner .right-button {
+				margin-left: 0;
+			}
+			.page-points {
+				float: right;
+				width: 80%;
+			}
+			.page-points .row-fluid {
+				margin-bottom: 10px;
+			}
+			#sections {
+				clear: both;
+			}
+		}
+
+		#switcher-container {
+			position: fixed;
+			top: 45px;
+			right: 5px;
+			z-index: 100;
+		}
+		@media (max-width: 980px) {
 			#switcher-container {
 				position: absolute;
-				top: 5px;
-				right: 5px;
+				top: 55px;
 			}
-			#header img.header {
-				position: absolute;
-			}
-			#header h1.header {
-				text-align: center;
-			}
-			.main-description {
-				font-size: 1.2em;
-			}
-			h2 {
-				margin: .83em 0 .1em 0;
-			}
-			p {
-				margin: 1em 0 .5em 0;
-			}
-			.featurelist {
-				background: transparent none no-repeat 0 0 !important;
-				margin: .5em 10px .5em 0;
-				padding: .5em;
-				float: left;
-			}
-			.featurelist ul {
-				margin: 0;
-				padding: 0;
-				list-style-type: none;
-			}
-			.featurelist ul a {
-				text-decoration: underline !important;
-			}
-			.featurelist ul .ui-icon {
-				display: inline-block;
-				position: relative;
-				top: 4px;
-				margin-right: .3em;
-			}
-			.featurelist ul img {
-				vertical-align: middle;
-				border: none 0;
-			}
-			.pf-group {
-				background: transparent none no-repeat 0 0 !important;
-				padding: 4px;
-				margin: 5px auto;
-			}
-			.ui-widget {
-				font-size: 75% !important;
-			}
-			.pf-group input.ui-button {
-				padding: 2px !important;
-				font-size: .92em !important;
-				margin-bottom: 3px;
-			}
+		}
+		.pf-group {
+			background: transparent none no-repeat 0 0 !important;
+			padding: 4px;
+			margin: 5px auto;
+		}
+		.ui-widget {
+			font-size: 100% !important;
+		}
+		.pf-group input.ui-button {
+			padding: 2px !important;
+			font-size: .92em !important;
+			margin-bottom: 3px;
+		}
+		.btn-toolbar {
+			line-height: 28px;
+		}
+		.btn-toolbar h4 {
+			margin: 1em 0 .3em;
+		}
+		.btn-toolbar .btn-group {
+			vertical-align: middle;
+		}
 
-			/* Source View */
-			.source-dialog pre {
-				border: 1px solid black;
-				margin: .5em .5em 1em;
-				padding: 1em;
-				background: beige;
-				color: midnightblue;
-				display:-moz-inline-stack;
-				display:inline-block;
-				zoom:1;
-				*display:inline;
-			}
-			.source-dialog > div {
-				border-top: 1px solid black;
-				border-bottom: 1px solid black;
-				margin-bottom: 1em;
-				display:-moz-inline-stack;
-				display:inline-block;
-				zoom:1;
-				*display:inline;
-			}
-			.source-dialog > div div.syntaxhighlighter {
-				overflow: visible !important;
-				width: auto !important;
-				display:-moz-inline-stack;
-				display:inline-block;
-				zoom:1;
-				*display:inline;
-			}
-			/* ]]> */
-		</style>
-		<!--[if lt IE 8]>
-		<style type="text/css">
-			.featurelist ul {
-				padding-left: 1em;
-				list-style-type: disc;
-			}
-			.featurelist ul .ui-icon {
-				display: none;
-			}
-		</style>
-		<![endif]-->
-		<script type="text/javascript">
-			// <![CDATA[
+		/* Source View */
+		pre.prettyprint {
+			display: table;
+		}
 
-			$(document).ready(function(){
-				// This is how to change the default settings for the entire page.
-				//$.ptags.defaults.ptags_delimiter = ";";
+		#demos h4 {
+			margin: .5em 0;
+		}
+		/* Fix Bootstrap Styles */
+		input {
+			margin-bottom: 0;
+			width: auto;
+		}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			// This is how to change the default settings for the entire page.
+			//$.ptags.defaults.ptags_delimiter = ";";
 
-				$("#tags1, #tags2, #tags3").ptags();
+			$("#tags1, #tags2, #tags3").ptags();
 
-				// This creates all those source buttons.
-				$(".wrapper .buttonize").each(function(){
-					var button = $(this);
-					if (!button.closest(".pf-group").length) {
-						button.button();
-						return;
+			// This creates all those source buttons.
+			$(".source").each(function(){
+				var button = $(this);
+				// Wrap the button in a container.
+				var contain = $('<div class="btn-group" />');
+				contain = button.wrap(contain).parent();
+				// Add a source button.
+				$('<button class="btn" title="Show source code.">{}</button>').click(function(){
+					$(this).blur();
+					var text = button.attr("onclick");
+					if (!text && button.attr("onmouseover"))
+						text = "// Mouse Over:\n"+button.attr("onmouseover")+"\n\n// Mouse Move:\n"+button.attr("onmousemove")+"\n\n// Mouse Out:\n"+button.attr("onmouseout");
+					// IE needs this.
+					if (text.toString) {
+						text = text.toString();
+						if (text.match(/^function (onclick|anonymous)[\n ]*\([^\)]*\)[\n ]*\{[\n\t ]*/))
+							text = text.replace(/^function (onclick|anonymous)[\n ]*\([^\)]*\)[\n ]*\{[\n\t ]*/, "").replace(/[\n\t ]*}[\n\t ]*$/, "");
 					}
-					// Wrap the button in a container.
-					var contain = $("<span />");
-					contain = button.wrap(contain).parent();
-					// Add a source button.
-					$("<input type=\"button\" value=\"{}\" title=\"Show source code.\" />").click(function(){
-						var text = button.attr("onclick");
-						if (!text && button.attr("onmouseover"))
-							text = "// Mouse Over:\n"+button.attr("onmouseover")+"\n\n// Mouse Move:\n"+button.attr("onmousemove")+"\n\n// Mouse Out:\n"+button.attr("onmouseout");
-						// IE needs this.
-						if (text.toString) {
-							text = text.toString();
-							if (text.match(/^function (onclick|anonymous)[\n ]*\([^\)]*\)[\n ]*\{[\n\t ]*/))
-								text = text.replace(/^function (onclick|anonymous)[\n ]*\([^\)]*\)[\n ]*\{[\n\t ]*/, "").replace(/[\n\t ]*}[\n\t ]*$/, "");
-						}
-						var dialog = $("<div title=\""+button.val()+" - Source\" class=\"source-dialog\"></div>");
-						$("<pre class=\"brush: js; toolbar: false;\" />").text(js_beautify(text)).appendTo(dialog);
-						if (text.match(/^\w*\([^\)]*\);$/)) {
-							var f_name = text.replace(/\(.*/g, "");
-							text = window[f_name].toString();
-							$("<pre class=\"brush: js; toolbar: false;\" />").text(js_beautify(text)).appendTo(dialog);
-						}
-						dialog.dialog({width: "auto"});
-						// Make sure the dialog isn't more than 800x600.
-						// Can't just add max-height cause that means it can't be resized beyond.
-						if (dialog.width() > 800)
-							dialog.dialog("option", "width", 800).dialog("option", "position", "center");
-						if (dialog.height() > 600)
-							dialog.dialog("option", "height", 600).dialog("option", "position", "center");
-						// Can't call .all(), it doesn't  work.
-						if (typeof SyntaxHighlighter != "undefined")
-							SyntaxHighlighter.highlight();
-					}).appendTo(contain);
-					contain.buttonset();
-				});
-
-				$('#switcher').themeswitcher();
+					var dialog = $("<div title=\""+button.text()+" - Source\" class=\"source-dialog\"></div>");
+					$("<pre class=\"prettyprint\" />").text(js_beautify(text)).appendTo(dialog);
+					if (text.match(/^\w*\([^\)]*\);$/)) {
+						var f_name = text.replace(/\(.*/g, "");
+						text = window[f_name].toString();
+						$("<pre class=\"prettyprint\" />").text(js_beautify(text)).appendTo(dialog);
+					}
+					dialog.dialog({width: "auto"});
+					// Make sure the dialog isn't more than 800x600.
+					// Can't just add max-height cause that means it can't be resized beyond.
+					if (dialog.width() > 800)
+						dialog.dialog("option", "width", 800).dialog("option", "position", "center");
+					if (dialog.height() > 600)
+						dialog.dialog("option", "height", 600).dialog("option", "position", "center");
+					prettyPrint();
+				}).appendTo(contain);
 			});
 
-			// ]]>
-		</script>
-	</head>
-	<body>
-		<div class="ui-widget-content ui-corner-all ui-helper-clearfix">
-			<div class="wrapper">
-				<div id="header" class="ui-widget-header ui-corner-all">
-					<div id="switcher-container"><div id="switcher"></div></div>
-					<img class="header" src="includes/default_logo.png" alt="Pines Logo" />
-					<h1 class="header">Pines Tags jQuery Plugin</h1>
+			if ($.fn.themeswitcher)
+				$('#switcher').themeswitcher();
+			else
+				$('#switcher').html("Couldn't load theme switcher widget.");
+			// Navbar scrollspy.
+			$('#navbar').scrollspy();
+		});
+	</script>
+</head>
+<body id="page" data-spy="scroll">
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=231372466970244";
+		fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+	<div id="navbar" class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="http://pinesframework.org/ptags/" style="height: 40px; padding-top: 0; padding-bottom: 0;">
+					<img id="logo" alt="Pines Logo" src="includes/pines-logo.png" style="padding: 0; border: 0; vertical-align: middle;" />
+					<span style="line-height: 40px;">Pines Tags</span>
+				</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="active"><a href="#page">Overview</a></li>
+						<li><a href="#demos">Demos</a></li>
+						<li><a href="#installation">Installation</a></li>
+						<li><a href="#comments">Comments</a></li>
+					</ul>
+					<ul class="nav pull-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								Beyond Pines Tags <b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="http://pinesframework.org/" target="_blank">Pines Framework</a></li>
+								<li><a href="http://pinescms.org/" target="_blank">Pines CMS</a></li>
+								<li class="divider"></li>
+								<li><a href="http://pinesframework.org/pform/" target="_blank">Pines Form</a></li>
+								<li><a href="http://pinesframework.org/pnotify/" target="_blank">Pines Notify</a></li>
+								<li><a href="http://pinesframework.org/pgrid/" target="_blank">Pines Grid</a></li>
+								<li class="divider"></li>
+								<li>
+									<a href="http://sourceforge.net/projects/pines" target="_blank"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=264165&amp;type=13" width="120" height="30" alt="Get Pines at SourceForge.net. Fast, secure and Free Open Source software downloads" style="border: none;" /></a>
+								</li>
+							</ul>
+						</li>
+					</ul>
 				</div>
-				<p style="float: right;">
-					<a href="http://sourceforge.net/projects/pines"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=264165&amp;type=15" width="150" height="40" alt="Get Pines at SourceForge.net. Fast, secure and Free Open Source software downloads" style="border: none;" /></a>
-				</p>
-				<p class="main-description">
-					Pines Tags is a JavaScript content tag editor plugin for the
-					jQuery JavaScript library, developed by Hunter Perrin as part
-					of <a href="http://pinesframework.org/">Pines</a>.
-					It is designed to provide maximum flexibility, while
-					still being easy to use and easy to implement. The original
-					input element is hidden and a clone input element is created
-					to allow the user to edit and create tags. This new input is
-					exactly the same as the original, except "__ptags" is
-					appended to the name and ID. The original input's value is
-					kept current with all the tags which are entered. Try out
-					different themes using the selector in the top right corner
-					of this page.
-					Pines Tags is distributed under the <a href="http://www.gnu.org/licenses/gpl.html" onclick="window.open(this.href); return false;">GPL</a>, <a href="http://www.gnu.org/licenses/lgpl.html" onclick="window.open(this.href); return false;">LGPL</a>, and <a href="http://www.mozilla.org/MPL/MPL-1.1.html" onclick="window.open(this.href); return false;">MPL</a>. This triple copyleft licensing model avoids incompatibility with other open source licenses.
-				</p>
-				<div class="dev-note ui-state-error ui-corner-all" style="display: none; padding: 1em; text-align: center;">
-					<h3 style="margin: 0;">Caution warning danger attention!</h3>
-					<p style="margin: .5em 0 0;">
-						This is the development site. It's a playground for
-						bleeding edge features and code that probably won't
-						work. You should head over to the
-						<a href="http://pinesframework.org/ptags/"><button type="button" class="buttonize" style="text-decoration: none !important; font-weight: bold !important;">Main Site</button></a>
-					</p>
-				</div>
-				<p class="stable-note" style="display: none;">
-					This is the stable site. You can download code here that's
-					tested and proven to work. However, if you like to live
-					dangerously, you can also check out the
-					<a href="http://pines.hg.sourceforge.net/hgweb/pines/ptags/raw-file/tip/index.html">development site</a>.
-				</p>
-				<p style="text-align: center;">
-					<button type="button" class="buttonize" onclick="window.location='https://sourceforge.net/projects/pines/files/ptags/1.1/ptags-1.1.1.zip/download';"><strong style="font-size: large;">Download Pines Tags</strong></button>
-				</p>
-				<h2>Features</h2>
-				<div class="ui-helper-clearfix">
-					<div class="featurelist ui-widget-content ui-corner-all">
-						<ul>
-							<li><span class="ui-icon ui-icon-bullet"></span>Preserves original input element. The value is updated, so you don't have to alter your scripts.</li>
-							<li><span class="ui-icon ui-icon-bullet"></span>Stays in sync with input element. You can still use <code>val()</code>.</li>
-							<li><span class="ui-icon ui-icon-bullet"></span>Tags can be edited by clicking them.</li>
-							<li><span class="ui-icon ui-icon-bullet"></span>Supports any custom delimeters.</li>
-							<li><span class="ui-icon ui-icon-bullet"></span>Completely keyboard accessible.</li>
-						</ul>
-					</div>
-					<div class="featurelist ui-widget-content ui-corner-all">
-						<ul>
-							<li><span class="ui-icon ui-icon-bullet"></span><a href="http://validator.w3.org/check?uri=referer">XHTML 1.0 Strict compliance.</a></li>
-							<li><span class="ui-icon ui-icon-bullet"></span><a href="http://jqueryui.com/themeroller/"><img src="includes/themeroller-ready.png" alt="ThemeRoller Ready" /></a></li>
-						</ul>
-					</div>
-				</div>
-				<h2>Demos</h2>
-				<form id="demo_form" action="post">
-					<div class="pf-group ui-widget-content ui-corner-all">
-						<input type="text" id="tags1" name="tags1" value="i'm a tag,me too" />
-						<br style="margin-bottom: 5px; display: block;" />
-						<input class="buttonize" value="Add a Tag" onclick="$('#tags1').ptags_add('Random Number: '+Math.random());" type="button" />
-						<input class="buttonize" value="Add Test Tags" onclick="$('#tags1').ptags_add(['test1', 'test2', 'test3']);" type="button" />
-						<input class="buttonize" value="Remove &quot;test1&quot; Tag" onclick="$('#tags1').ptags_remove('test1');" type="button" />
-						<input class="buttonize" value="Remove Test Tags" onclick="$('#tags1').ptags_remove(['test1', 'test2', 'test3']);" type="button" />
-						<input class="buttonize" value="Remove All Tags" onclick="$('#tags1').ptags_remove_all();" type="button" />
-						<input class="buttonize" value="Edit Value Directly" onclick="var newval = prompt('Edit the value:', $('#tags1').val()); if (newval != null) $('#tags1').val(newval);" type="button" />
-					</div>
-					<div class="pf-group ui-widget-content ui-corner-all">
-						Styles on the input box are maintained:
-						<br style="margin-bottom: 5px; display: block;" />
-						<input class="ui-widget-content ui-corner-all" style="padding: .2em .3em;" type="text" id="tags2" name="tags2" value="these,are,tags" />
-					</div>
-					<div class="pf-group ui-widget-content ui-corner-all">
-						You can place it in line with text. Clifford, the <input type="text" id="tags3" name="tags3" value="big,red" size="5" /> dog.
-					</div>
-					<div class="pf-group ui-widget-content ui-corner-all">
-						<input class="buttonize" value="Transform this box." onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.');" type="button" />
-						<br style="margin-bottom: 5px; display: block;" />
-						<input type="text" id="user_tags1" name="user_tags1" />
-					</div>
-					<div class="pf-group ui-widget-content ui-corner-all">
-						<input class="buttonize" value="Transform this box and make tags sortable." onclick="$('#user_tags2').ptags({ptags_sortable: {tolerance: 'pointer', handle: '.ui-ptags-tag-text'}});" type="button" />
-						<br style="margin-bottom: 5px; display: block;" />
-						<input type="text" id="user_tags2" name="user_tags2" value="you,can,sort,us" />
-					</div>
-					<div class="pf-group ui-widget-content ui-corner-all">
-						<input class="buttonize" value="Transform this box with custom delimiter." onclick="$('#user_tags3').ptags({ptags_delimiter: ' '});" type="button" />
-						<br style="margin-bottom: 5px; display: block;" />
-						<input type="text" id="user_tags3" name="user_tags3" value="these are tags separated by spaces" />
-					</div>
-					<div class="pf-group ui-widget-content ui-corner-all">
-						<input class="buttonize" value="Only add tag buttons to this box." onclick="$('#user_tags4').ptags({ptags_show_box: true, ptags_input_box: false});" type="button" />
-						<br style="margin-bottom: 5px; display: block;" />
-						<input type="text" id="user_tags4" name="user_tags4" value="some,default,tags" />
-					</div>
-					<div class="pf-group ui-widget-content ui-corner-all">
-						<input class="buttonize" value="What will this form submit?" onclick="alert('Query String:\n' + $('#demo_form input:text').serialize() + '\n\nJSON Structure:\n' + JSON.stringify($('#demo_form input:text').serializeArray()));" type="button" />
-					</div>
-				</form>
-
-				<h2>Installation</h2>
-				<p>Installation is simple. Include jQuery and jQuery UI (only the CSS is required). Then include the following files:</p>
-				<div class="ui-helper-clearfix">
-					<div class="featurelist">
-						<ul>
-							<li><span class="ui-icon ui-icon-bullet"></span>jquery.ptags.js or jquery.ptags.min.js (Minified)</li>
-							<li><span class="ui-icon ui-icon-bullet"></span>jquery.ptags.default.css</li>
-						</ul>
-					</div>
-				</div>
-				<p style="text-align: center;">
-					<button class="buttonize" type="button" onclick="window.location='https://sourceforge.net/projects/pines/files/ptags/1.1/ptags-1.1.1.zip/download';"><strong style="font-size: large;">Download Pines Tags</strong></button>
-				</p>
 			</div>
 		</div>
-	</body>
+	</div>
+	<div id="switcher-container"><div id="switcher"></div></div>
+	<div class="wrapper">
+		<div class="page-banner">
+			<h1>Pines Tags</h1>
+			<p id="description">JavaScript (jQuery) content tag editor plugin.</p>
+			<div>
+				<a class="btn btn-primary btn-large" href="https://sourceforge.net/projects/pines/files/ptags/1.1/ptags-1.1.2.zip/download" target="_blank">Download Pines Tags 1.1.2</a>
+				<a class="right-button btn btn-large" href="http://github.com/sciactive/ptags" target="_blank" title="Fork me on GitHub">Pines Tags on GitHub <img src="includes/github-icon.png" alt="GitHub Icon" /></a>
+				<br /><br />
+				<ul class="quick-links">
+					<li class="fb-btn">
+						<div class="fb-like" data-href="http://pinesframework.org/ptags/" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+					</li>
+					<li class="follow-btn">
+						<a href="https://twitter.com/pinesframework" class="twitter-follow-button" data-show-count="false">Follow @pinesframework</a>
+					</li>
+					<li class="tweet-btn">
+						<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://pinesframework.org/ptags/">Tweet</a>
+					</li>
+				</ul>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+		</div>
+		<div class="page-points">
+			<div class="container-fluid">
+				<div class="row-fluid dev-note" style="display: none;">
+					<div class="span3">&nbsp;</div>
+					<div class="span6 offset3">
+						<div class="alert alert-error">
+							<h3><i class="icon-exclamation-sign" style="position: relative; top: 3px;"></i> Caution warning danger attention!</h3>
+							<p>
+								This is the development site. It's a playground for
+								bleeding edge features and code that probably won't
+								work. You should head over to the
+								<a href="http://pinesframework.org/ptags/" class="btn btn-success">Main Site</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span8">
+						<div class="alert-block">
+							<h3><i class="icon-book" style="position: relative; top: 3px;"></i> About</h3>
+							<p>
+								Pines Tags is a JavaScript content tag editor plugin for the
+								jQuery JavaScript library, developed by Hunter Perrin as part
+								of <a href="http://pinesframework.org/">Pines</a>.
+								It is designed to provide maximum flexibility, while
+								still being easy to use and easy to implement.
+							</p>
+						</div>
+					</div>
+					<div class="span4">
+						<div class="alert-block">
+							<h3><i class="icon-list-alt" style="position: relative; top: 3px;"></i> Cross-Browser</h3>
+							<p>
+								Pines Tags works in all major browsers and provides
+								a consistent interface. It is tested thoroughly for
+								consistency.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span4">
+						<div class="alert-block">
+							<h3><i class="icon-asterisk" style="position: relative; top: 3px;"></i> Easy to Implement</h3>
+							<p>
+								The original input element is hidden and a clone input element is created
+								to allow the user to edit and create tags. This new input is
+								exactly the same as the original, except "__ptags" is
+								appended to the name and ID. The original input's value is
+								kept current with all the tags that are entered. This means you
+								don't have to change anything in your server-side scripts!
+							</p>
+							<p>
+								<a class="btn" data-toggle="modal" href="#feature-modal" >See All Features</a>
+							</p>
+						</div>
+					</div>
+					<div class="span4">
+						<div class="alert-block">
+							<h3><i class="icon-picture" style="position: relative; top: 3px;"></i> Themeable</h3>
+							<p>
+								Pines Tags uses the jQuery UI CSS library for styling, which
+								means it is fully and easily themeable. Try out some of the
+								readymade themes using the selector in the top right corner
+								of this page.
+							</p>
+							<p style="text-align: right;">
+								<a href="http://jqueryui.com/themeroller/"><img src="includes/themeroller-ready.png" alt="ThemeRoller Ready" /></a>
+							</p>
+						</div>
+					</div>
+					<div class="span4">
+						<div class="alert-block">
+							<h3><i class="icon-gift" style="position: relative; top: 3px;"></i> Completely Open</h3>
+							<p>
+								Pines Tags is distributed under the
+								<a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GPL</a>,
+								<a href="http://www.gnu.org/licenses/lgpl.html" target="_blank">LGPL</a>,
+								and
+								<a href="http://www.mozilla.org/MPL/MPL-1.1.html" target="_blank">MPL</a>.
+								This triple copyleft licensing model avoids
+								incompatibility with other open source licenses.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="row-fluid stable-note" style="display: none;">
+					<div class="span3">&nbsp;</div>
+					<div class="span6 offset3">
+						<div class="alert alert-success">
+							<h3><i class="icon-info-sign" style="position: relative; top: 3px;"></i> Did you know?</h3>
+							<p>
+								This is the stable site. You can download code here that's
+								tested and proven to work. However, if you like to live
+								dangerously, you can also check out the
+								<a href="http://sciactive.github.com/ptags">development site</a>.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal hide fade" id="feature-modal">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">×</a>
+				<h3>Pines Tags Features</h3>
+			</div>
+			<div class="modal-body">
+				<ul>
+					<li>Preserves original input element. The value is updated, so you don't have to alter your scripts.</li>
+					<li>Stays in sync with input element. You can still use <code>val()</code>.</li>
+					<li>Tags can be edited by clicking them.</li>
+					<li>Supports any custom delimeters.</li>
+					<li>Completely keyboard accessible.</li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<a data-dismiss="modal" class="btn">Close</a>
+			</div>
+		</div>
+		<div id="sections">
+			<div id="demos">
+				<div class="page-header">
+					<h2>Demos</h2>
+				</div>
+				<form id="demo_form" action="post" onsubmit="return false;">
+					<div>
+						This is an example Pines Tags box. Try typing in it to add new tags, or click the current tags to edit them. Click the <i style="display: inline-block; height: 16px; width: 16px; vertical-align: middle;" class="ui-icon ui-icon-circle-minus"></i> to remove the tag.
+						<br style="margin-bottom: 5px; display: block;" />
+						<input type="text" id="tags1" name="tags1" value="i'm a tag,me too" />
+						<br style="margin-bottom: 5px; display: block;" />
+						<div class="btn-toolbar">
+							<button class="btn source" onclick="$('#tags1').ptags_add('Random Number: '+Math.random());">Add a Tag</button>
+							<button class="btn source" onclick="$('#tags1').ptags_add(['test1', 'test2', 'test3']);">Add Test Tags</button>
+							<button class="btn source" onclick="$('#tags1').ptags_remove('test1');">Remove "test1" Tag</button>
+							<button class="btn source" onclick="$('#tags1').ptags_remove(['test1', 'test2', 'test3']);">Remove Test Tags</button>
+							<button class="btn source" onclick="$('#tags1').ptags_remove_all();">Remove All Tags</button>
+							<button class="btn source" onclick="var newval = prompt('Edit the value:', $('#tags1').val()); if (newval != null) $('#tags1').val(newval);">Edit Value Directly</button>
+						</div>
+					</div>
+					<br /><br />
+					<div class="row-fluid">
+						<div class="span6">
+							<h4>Calling Pines Tags</h4>
+							<button class="btn source" onclick="$('#user_tags1').ptags(); alert('Now try typing in it, and hit enter.');">Transform this box.</button>
+							<br style="margin-bottom: 5px; display: block;" />
+							<input type="text" id="user_tags1" name="user_tags1" />
+						</div>
+						<div class="span6">
+							<h4>Making Tags Sortable</h4>
+							<button class="btn source" onclick="$('#user_tags2').ptags({ptags_sortable: {tolerance: 'pointer', handle: '.ui-ptags-tag-text'}});">Transform this box and make tags sortable.</button>
+							<br style="margin-bottom: 5px; display: block;" />
+							<input type="text" id="user_tags2" name="user_tags2" value="you,can,sort,us" />
+						</div>
+					</div>
+					<br /><br />
+					<div class="row-fluid">
+						<div class="span6">
+							<h4>Input Styles</h4>
+							Styles on the input box are maintained:
+							<br style="margin-bottom: 5px; display: block;" />
+							<input class="ui-widget-content ui-corner-all" style="padding: .2em .3em;" type="text" id="tags2" name="tags2" value="these,are,tags" />
+						</div>
+						<div class="span6">
+							<h4>Placement</h4>
+							You can place it in line with text. Clifford, the <input type="text" id="tags3" name="tags3" value="big,red" size="5" /> dog.
+						</div>
+					</div>
+					<br /><br />
+					<div class="row-fluid">
+						<div class="span6">
+							<h4>Using a Custom Delimiter</h4>
+							<button class="btn source" onclick="$('#user_tags3').ptags({ptags_delimiter: ' '});">Transform this box with custom delimiter.</button>
+							<br style="margin-bottom: 5px; display: block;" />
+							<input type="text" id="user_tags3" name="user_tags3" value="these are tags separated by spaces" />
+						</div>
+						<div class="span6">
+							<h4>No Tag Editor Box</h4>
+							<button class="btn source" onclick="$('#user_tags4').ptags({ptags_show_box: true, ptags_input_box: false});">Only add tag buttons to this box.</button>
+							<br style="margin-bottom: 5px; display: block;" />
+							<input type="text" id="user_tags4" name="user_tags4" value="some,default,tags" />
+						</div>
+					</div>
+					<br /><br />
+					<div>
+						<button class="btn source" onclick="alert('Query String:\n' + $('#demo_form input:text').serialize() + '\n\nJSON Structure:\n' + JSON.stringify($('#demo_form input:text').serializeArray()));">What will this form submit?</button>
+					</div>
+				</form>
+			</div>
+			<div id="installation">
+				<div class="page-header">
+					<h2>Installation</h2>
+				</div>
+				<p>Installation is simple. Include jQuery and jQuery UI (only the CSS is required). Then include the following files:</p>
+				<div class="clearfix">
+					<ul>
+						<li>jquery.ptags.js or jquery.ptags.min.js (Minified)</li>
+						<li>jquery.ptags.default.css</li>
+					</ul>
+				</div>
+			</div>
+			<div id="comments">
+				<div class="page-header">
+					<h2>Comments</h2>
+				</div>
+				<div id="disqus_thread"></div>
+				<script type="text/javascript">
+					/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+					var disqus_shortname = 'ptags'; // required: replace example with your forum shortname
+
+					/* * * DON'T EDIT BELOW THIS LINE * * */
+					(function() {
+						var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+						dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+					})();
+				</script>
+				<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+				<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+		</div>
+		<p id="copyright">&copy; 2011-2012 SciActive.com. All Rights Reserved.</p>
+	</div>
+</body>
 </html>
