@@ -1,7 +1,7 @@
 /*
- * jQuery Pines Tags (ptags) Plugin 1.1.2
+ * jQuery PTags Plugin 1.1.2
  *
- * http://pinesframework.org/ptags/
+ * http://sciactive.com/ptags/
  * Copyright (c) 2009-2012 Hunter Perrin
  *
  * Triple license under the GPL, LGPL, and MPL:
@@ -15,9 +15,9 @@
 		if (!textorarray)
 			return this;
 		this.each(function(){
-			if (!this.pines_tags)
+			if (!this._ptags)
 				return;
-			this.pines_tags.ptags_add(textorarray);
+			this._ptags.ptags_add(textorarray);
 		});
 		return this;
 	};
@@ -25,17 +25,17 @@
 		if (!textorarray)
 			return this;
 		this.each(function(){
-			if (!this.pines_tags)
+			if (!this._ptags)
 				return;
-			this.pines_tags.ptags_remove(textorarray);
+			this._ptags.ptags_remove(textorarray);
 		});
 		return this;
 	};
 	$.fn.ptags_remove_all = function(){
 		this.each(function(){
-			if (!this.pines_tags)
+			if (!this._ptags)
 				return;
-			this.pines_tags.ptags_remove_all();
+			this._ptags.ptags_remove_all();
 		});
 		return this;
 	};
@@ -45,8 +45,8 @@
 		var ret_val = _val.apply(this, arguments);
 		if (typeof value != "undefined") {
 			this.each(function(){
-				if (typeof this.pines_tags != "undefined")
-					this.pines_tags.ptags_sync_input();
+				if (typeof this._ptags != "undefined")
+					this._ptags.ptags_sync_input();
 			});
 		}
 		return ret_val;
@@ -61,12 +61,12 @@
 		all_elements.each(function() {
 			var ptags = $(this);
 			ptags.ptags_version = "1.1.2";
-			
+
 			// Check for the ptags class. If it has it, we've already transformed this element.
 			if (ptags.hasClass("ui-ptags-tag-box")) return true;
 			// Add the ptags class.
 			ptags.addClass("ui-ptags-tag-box");
-			
+
 			ptags.extend(ptags, opts);
 
 			ptags.ptags_widget = $("<span />");
@@ -173,7 +173,7 @@
 			ptags.wrapAll(ptags.ptags_container);
 			// Update the container.
 			ptags.ptags_container = ptags.parent();
-			
+
 			if (ptags.ptags_input_box) {
 				var input_box = $(ptags.get(0)).clone().val("").keydown(function(e){
 					if (e.keyCode == 13 && !e.shiftKey) {
@@ -227,7 +227,7 @@
 				ptags.css("display", "none");
 
 			// Save the ptags object in the DOM, so we can access it.
-			this.pines_tags = ptags;
+			this._ptags = ptags;
 		});
 
 		return all_elements;
